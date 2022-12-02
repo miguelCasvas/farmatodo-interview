@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.svAnime.setOnQueryTextListener(this)
+
+        searchAnime()
         initRecyclerView()
     }
 
@@ -38,14 +40,14 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.jikan.moe/v4/anime/?order_by=score&sort=desc")
+            .baseUrl("https://api.jikan.moe/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    private fun searchAnime() {
+    private fun searchAnime(name: String? = null) {
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(APIService::class.java).getAnimes("")
+            val call = getRetrofit().create(APIService::class.java).getAnimes("score", "desc", name)
             val animes = call.body()
 
             // Ejecución sobre hilo principal
@@ -75,7 +77,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrEmpty()) {
-            searchAnime()
+            searchAnime(query)
         }
 
         return true
