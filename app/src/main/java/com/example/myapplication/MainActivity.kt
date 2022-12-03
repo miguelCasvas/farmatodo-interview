@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.animeapi.APIService
 import com.example.myapplication.animeapi.AnimeAdapter
 import com.example.myapplication.animeapi.response.Data
+import com.example.myapplication.animeapi.response.AnimeTopAdapter
 import com.example.myapplication.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +18,22 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
-
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: AnimeAdapter
-    private val animesList = mutableListOf<Data>()
+
+    /*
+     * Carusel animes top
+     */
+
+    private val animeTopList = mutableListOf<Data>()
+    private lateinit var animeTopAdapter: AnimeTopAdapter
+
+
+    /*
+     * carusel animes discover
+     */
+
+    private val animeList = mutableListOf<Data>()
+    private lateinit var animeAdapter: AnimeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +41,24 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         setContentView(binding.root)
         binding.svAnime.setOnQueryTextListener(this)
 
-        searchAnime()
-        initRecyclerView()
+        initAnimeTopRV()
+        //initDiscoverRv()
     }
 
-    private fun initRecyclerView() {
-        adapter = AnimeAdapter(animesList)
+    private fun initDiscoverRv() {
+        animeAdapter = AnimeAdapter(animeList)
         binding.rvAnime.layoutManager = LinearLayoutManager(this)
-        binding.rvAnime.adapter = adapter
+        binding.rvAnime.adapter = animeAdapter
+    }
+
+    private fun initAnimeTopRV() {
+        searchAnime("score", "desc")
+
+        animeTopAdapter = AnimeTopAdapter(animeList)
+        val linearLayoutM = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.animeTopRV.layoutManager = linearLayoutM
+        binding.animeTopRV.adapter = animeTopAdapter
     }
 
     private fun getRetrofit(): Retrofit {
@@ -45,18 +68,22 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             .build()
     }
 
-    private fun searchAnime(name: String? = null) {
+    private fun searchAnime(
+        score: String? = null,
+        desc: String? = null,
+        name: String? = null,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(APIService::class.java).getAnimes("score", "desc", name)
+            val call = getRetrofit().create(APIService::class.java).getAnimes(score, desc, name)
             val animes = call.body()
 
             // Ejecución sobre hilo principal
             runOnUiThread {
                 if (call.isSuccessful) {
                     val responseAnimes = animes?.data ?: emptyList()
-                    animesList.clear()
-                    animesList.addAll(responseAnimes)
-                    adapter.notifyDataSetChanged()
+                    animeList.clear()
+                    animeList.addAll(responseAnimes)
+                    animeTopAdapter.notifyDataSetChanged()
                 } else {
                     showError()
                 }
