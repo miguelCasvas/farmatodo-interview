@@ -12,5 +12,8 @@ class AnimeViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
     fun bind(anime: Data) {
         Picasso.get().load(anime.images?.jpg?.imageUrl).into(binding.ivAnime)
+        binding.animeDiscoverTV.setText(anime.title)
+        binding.animeDiscoverLabelTV.setText(anime.season)
+        binding.durationLabelTV.setText(anime.duration)
     }
 }

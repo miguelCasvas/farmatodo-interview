@@ -23,4 +23,5 @@ data class Data (
   @SerializedName("synopsis"        ) var synopsis       : String?              = null,
   @SerializedName("season"          ) var season         : String?              = null,
   @SerializedName("year"            ) var year           : Int?                 = null,
+  @SerializedName("duration"        ) var duration       : String?              = null,
 )

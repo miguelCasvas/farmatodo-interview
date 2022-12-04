@@ -2,8 +2,7 @@ package com.example.myapplication
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.animeapi.APIService
-import com.example.myapplication.animeapi.response.AnimeTopAdapter
-import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.animeapi.AnimeTopAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
