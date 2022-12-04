@@ -1,11 +1,11 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.animeapi.response.Data
 import com.example.myapplication.databinding.ActivityMain2Binding
-import com.example.myapplication.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
 
 class MainActivity2 : AppCompatActivity() {
@@ -19,7 +19,19 @@ class MainActivity2 : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        anime =  intent.getSerializableExtra("anime") as Data
+        // calling the action bar
+        var actionBar = getSupportActionBar()
+        if (actionBar != null) {
+
+            // Customize the back button
+            actionBar.setHomeAsUpIndicator(R.drawable.back_arrow_5821)
+            actionBar.setHomeButtonEnabled(true)
+
+            // showing the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        anime = intent.getSerializableExtra("anime") as Data
         binding.title.text = anime.title
         binding.label1.text = anime.status
         binding.label2.text = anime.duration
@@ -37,5 +49,12 @@ class MainActivity2 : AppCompatActivity() {
             .load(anime.images?.jpg?.largeImageUrl)
             .resize(1000, 850)
             .into(binding.ivAnime)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
