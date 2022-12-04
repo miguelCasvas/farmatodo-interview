@@ -1,6 +1,7 @@
 package com.example.myapplication.animeapi.response
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Pagination (
@@ -10,4 +11,4 @@ data class Pagination (
   @SerializedName("current_page"      ) var currentPage     : Int?     = null,
   @SerializedName("items"             ) var items           : Items?   = Items()
 
-)
+): Serializable

@@ -2,4 +2,7 @@
     <string name="app_name">FARMATODO :3 ANIME</string>
     <string name="discover_title">Discover</string>
     <string name="discover_sub_title">είναι απλά ένα κείμενο χωρίς</string>
+    <string name="detail_title">.:: Anime ::.</string>
+    <string name="anime_synopsis">Anime synopsis</string>
+    <string name="btn_start">&#9654;  START WATCHING NOW</string>
 </resources>

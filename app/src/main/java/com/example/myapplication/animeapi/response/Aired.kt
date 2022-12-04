@@ -1,6 +1,7 @@
 package com.example.myapplication.animeapi.response
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Aired (
@@ -10,4 +11,4 @@ data class Aired (
   @SerializedName("prop"   ) var prop   : Prop?   = Prop(),
   @SerializedName("string" ) var string : String? = null
 
-)
+): Serializable

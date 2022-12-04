@@ -1,6 +1,7 @@
 package com.example.myapplication.animeapi.response
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Webp (
@@ -9,4 +10,4 @@ data class Webp (
   @SerializedName("small_image_url" ) var smallImageUrl : String? = null,
   @SerializedName("large_image_url" ) var largeImageUrl : String? = null
 
-)
+): Serializable

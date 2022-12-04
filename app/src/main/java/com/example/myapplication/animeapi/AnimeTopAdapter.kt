@@ -20,5 +20,4 @@ class AnimeTopAdapter(private val animeList: List<Data>): RecyclerView.Adapter<A
     }
 
     override fun getItemCount(): Int = animeList.size
-
 }
