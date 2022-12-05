@@ -17,7 +17,11 @@ abstract class AnimeCarousel(var mainActivity: MainActivity) {
     }
 
     protected fun showError() {
-        Toast.makeText(mainActivity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+        showToast("Ha ocurrido un error")
+    }
+
+    protected fun showToast(message: String) {
+        Toast.makeText(mainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     abstract fun initAnimeRecycleView();

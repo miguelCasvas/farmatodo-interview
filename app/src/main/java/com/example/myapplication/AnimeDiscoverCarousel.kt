@@ -33,6 +33,10 @@ class AnimeDiscoverCarousel (mainActivity: MainActivity) : AnimeCarousel(mainAct
                     animeList.clear()
                     animeList.addAll(responseAnimes)
                     animeAdapter.notifyDataSetChanged()
+
+                    if (animeList.isEmpty()) {
+                        showToast("Ay! ese anime no está disponible")
+                    }
                 } else {
                     showError()
                 }
